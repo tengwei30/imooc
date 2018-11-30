@@ -1,29 +1,28 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
-// import { createStore } from 'redux'
+import React from 'react'
+import { connect } from 'react-redux'
+import { addGUN, addGUNAsync, removeGUN } from './index.redux'
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+// const mapStatetoPros = (state) => {
+//     return {num: state}
+// }
+// const actionCreators = { addGUN, addGUNAsync, removeGUN }
+// App = connect(mapStatetoPros, actionCreators)(App)
+@connect(
+    state => ({num: state}),
+    { addGUN, addGUNAsync, removeGUN }
+)    // 修饰器写法～等同上面书写方式
+class App extends React.Component{
+    render() {
+        const { num, addGUN, addGUNAsync, removeGUN } = this.props
+        return (
+            <div>
+                <h2>我是{num}</h2>
+                <button onClick={addGUN}>加1</button>
+                <button onClick={removeGUN}>减1</button>
+                <button onClick={addGUNAsync}>异步2s加1</button>
+            </div>
+        )
+    }
 }
 
 export default App;
