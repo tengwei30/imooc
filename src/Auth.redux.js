@@ -3,7 +3,7 @@ const LOGIN_IN = 'LOGIN_IN'
 const LOGIN_OUT = 'LOGIN_OUT'
 
 // reducers
-export function auth(state={isAuth:false, user="admin"},action) {
+export function auth(state={isAuth:false, user: "admin"}, action) {
     switch(action.type) {
         case LOGIN_IN:
             return {...state, isAuth: true}

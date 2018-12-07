@@ -14,8 +14,8 @@ const User = mongoose.model('user', new mongoose.Schema({
 }))
 // 新增数据 增
 // User.create({
-//     user: 'xiaoming',
-//     age: 12
+//     user: 'zhazha',
+//     age: 14
 // }, (err, doc) => {
 //     if (!err) {
 //         console.log(doc)
@@ -37,18 +37,18 @@ const User = mongoose.model('user', new mongoose.Schema({
 // 新建app
 const app = express()
 
-const port = 3000
+const port = 9093
 
 app.get('/', (req, res) => res.send('hello world'))
 
 
 app.get('/data', (req, res) => {
-    // User.find({}, (err, doc) => {  // 查找全部
-    //     res.json(doc)
-    // })
-    User.find({'user': 'xiaoming'}, (err, doc) => { // 精确查询
+    User.find({}, (err, doc) => {  // 查找全部
         res.json(doc)
     })
+    // User.find({'user': 'xiaoming'}, (err, doc) => { // 精确查询
+    //     res.json(doc)
+    // })
 })
 
 app.listen(port, () => console.log(`app listening on port ${port}`))

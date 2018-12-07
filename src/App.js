@@ -8,7 +8,7 @@ import { addGUN, addGUNAsync, removeGUN } from './index.redux'
 // const actionCreators = { addGUN, addGUNAsync, removeGUN }
 // App = connect(mapStatetoPros, actionCreators)(App)
 @connect(
-    state => ({num: state}),
+    state => ({num: state.counter}),
     { addGUN, addGUNAsync, removeGUN }
 )    // 修饰器写法～等同上面书写方式
 class App extends React.Component{
