@@ -131,10 +131,5 @@
       ]
     ]
   },
-  "proxy": {
-    "/api/*": {
-      "target": "http://localhost:9093",
-      "changeOrigin": true
-    }
-  }
+  "proxy": "http://localhost:9093"
 }

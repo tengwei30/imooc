@@ -4,7 +4,7 @@ import App from './App'
 import About from './About'
 import { connect } from 'react-redux'
 import { loginOut } from './Auth.redux'
-import axios from 'axios'
+// import axios from 'axios'
 
 @connect(
     state => state.auth,
@@ -12,12 +12,12 @@ import axios from 'axios'
 )
 class Dashboard extends React.Component{
     componentWillMount () {
-        axios.get('/api/data')
-            .then(res => {
-                console.info(res)
-            }).catch(err => {
-                console.error('error ---------> ', err)
-            })
+//         axios.get('/api/data')
+//             .then(res => {
+//                 console.info(res)
+//             }).catch(err => {
+//                 console.error('error ---------> ', err)
+//             })
     }
     render () {
         const { loginOut, isAuth } = this.props
