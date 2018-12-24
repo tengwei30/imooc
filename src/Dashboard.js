@@ -3,28 +3,30 @@ import { Link, Route, Redirect } from 'react-router-dom'
 import App from './App'
 import About from './About'
 import { connect } from 'react-redux'
-import { loginOut } from './Auth.redux'
-import axios from 'axios'
+import { loginOut, getUserData } from './Auth.redux'
+
 
 @connect(
     state => state.auth,
-    { loginOut }
+    { loginOut, getUserData }
 )
 class Dashboard extends React.Component{
+    // constructor(props) {
+    //     super(props)
+    //     this.state = {
+    //         data: {}
+    //     }
+    // }
     componentWillMount () {
-        axios.get('/api/data')
-            .then(res => {
-                console.info(res)
-            }).catch(err => {
-                console.error('error ---------> ', err)
-            })
+        this.props.getUserData()
     }
     render () {
-        const { loginOut, isAuth } = this.props
+        const { loginOut, isAuth, user } = this.props
         const redirect = <Redirect to="/login"></Redirect>
         const app = (
             <div>
                 <h2>进来啦</h2>
+                <h3>我的名字：{user}</h3>
                 <button onClick={ loginOut } >点击退出 </button>
                 <ul>
                     <li>
