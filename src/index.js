@@ -4,9 +4,12 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
 import { Provider } from 'react-redux'
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
-import Auth from './Auth'
 import Dashboard from './Dashboard'
 import reducers from "./reducer.js";
+import AuthRoute from './component/authroute/authroute'
+import Login from './container/login/login'
+import Register from './container/register/register';
+import 'antd-mobile/dist/antd-mobile.css';
 
 
 const store = createStore(reducers, compose(
@@ -17,11 +20,13 @@ const store = createStore(reducers, compose(
 ReactDOM.render(
     (<Provider store={store}>
         <BrowserRouter>
-            <Switch>
-                <Route path="/login" component={Auth}></Route>
+            <div> {/** 用swtich 会导致显示出错 */}
+                <AuthRoute></AuthRoute>
+                <Route path="/login" component={Login}></Route>
+                <Route path="/register" component={Register}></Route>
                 <Route path="/dashboard" component={Dashboard}></Route>
                 <Redirect to="dashboard"></Redirect>
-            </Switch>
+            </div>
         </BrowserRouter>
     </Provider>),
     document.getElementById('root')
