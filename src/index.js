@@ -7,6 +7,7 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
 // import Dashboard from './Dashboard'
 import reducers from "./reducer.js";
 import AuthRoute from './component/authroute/authroute'
+import BossInfo from './container/bossinfo/bossinfo'
 import Login from './container/login/login'
 import Register from './container/register/register';
 import 'antd-mobile/dist/antd-mobile.css';
@@ -22,8 +23,11 @@ ReactDOM.render(
         <BrowserRouter>
             <div> {/** 用swtich 会导致显示出错 */}
                 <AuthRoute></AuthRoute>
-                <Route path="/login" component={Login}></Route>
-                <Route path="/register" component={Register}></Route>
+                <Switch>
+                    <Route path="/bossinfo" component={BossInfo}></Route>
+                    <Route path="/login" component={Login}></Route>
+                    <Route path="/register" component={Register}></Route>
+                </Switch>
                 {/* <Route path="/dashboard" component={Dashboard}></Route> */}
                 {/* <Redirect to="dashboard"></Redirect> */}
             </div>

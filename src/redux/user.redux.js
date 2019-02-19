@@ -1,13 +1,15 @@
 import axios from 'axios'
 import { getRedirectPath } from '../util'
-const REGISTER_SUCCESS = 'REGISTER_SUCCESS'
-const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
+// const REGISTER_SUCCESS = 'REGISTER_SUCCESS'
+// const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
+
+const AUTH_SUCCESS = 'AUTH_SUCCESS'
 const ERROR_MSG = 'ERROR_MSG'
 const LOAD_DATA = 'LOAD_DATA'
 
 const initState = { // 用户初始化信息
   redirectTo: '',
-  isAuth: '',
+  // isAuth: '',
   user: '',
   type: '',
   msg: ''
@@ -15,15 +17,17 @@ const initState = { // 用户初始化信息
 // reduces
 export function user(state=initState,action ) {
   switch (action.type) {
-    case REGISTER_SUCCESS:
-      return { ...state, msg:'', redirectTo: getRedirectPath(action.payload), isAuth: true, ...action.payload }
-      break
+    case AUTH_SUCCESS:
+    return { ...state, msg:'', redirectTo: getRedirectPath(action.payload), ...action.payload }
+    // case REGISTER_SUCCESS:
+    //   return { ...state, msg:'', redirectTo: getRedirectPath(action.payload), isAuth: true, ...action.payload }
+    //   break
     case ERROR_MSG:
       return { ...state, isAuth: false, msg: action.msg }
       break
-    case LOGIN_SUCCESS:
-      return { ...state, isAuth: true, ...action.payload, redirectTo: getRedirectPath(action.payload), msg: '' }
-      break
+    // case LOGIN_SUCCESS:
+    //   return { ...state, isAuth: true, ...action.payload, redirectTo: getRedirectPath(action.payload), msg: '' }
+    //   break
     case LOAD_DATA:
       return { ...state, ...action.payload }
       break
@@ -32,23 +36,30 @@ export function user(state=initState,action ) {
   }
 }
 
-function registerSuccess (data) {
+function authSuccess (data) {
   return {
-    type: REGISTER_SUCCESS,
-    'payload': data
+    type: AUTH_SUCCESS,
+    payload: data 
   }
 }
+
+// function registerSuccess (data) {
+//   return {
+//     type: REGISTER_SUCCESS,
+//     'payload': data
+//   }
+// }
 
 function errorMsg(msg) {
   return { msg, type: ERROR_MSG }
 }
 
-function loginSuccess (data) {
-  return {
-    type: LOGIN_SUCCESS,
-    'payload': data
-  }
-}
+// function loginSuccess (data) {
+//   return {
+//     type: LOGIN_SUCCESS,
+//     'payload': data
+//   }
+// }
 
 export function loadData (data) {
   return {
@@ -72,11 +83,24 @@ export function register({user, pwd, repeatpwd, type}) {  // 注册
       type
     }).then(res => {
       if (res.status === 200 && res.data.code === 0) {
-        dispatch(registerSuccess({user, pwd, type}))
+        dispatch(authSuccess(res.data.data))
       } else {
         dispatch(errorMsg(res.data.msg))
       }
     })
+  }
+}
+
+export function update(data) {  // 更新
+  return dispatch => {
+    axios.post('/user/update', data)
+      .then(res => {
+        if (res.status === 200 && res.data.code === 0) {
+          dispatch(authSuccess(res.data.data))
+        } else {
+          dispatch(errorMsg(res.data.msg))
+        }
+      })
   }
 }
 
@@ -91,7 +115,7 @@ export function loginIn ({user, pwd}) { // 登录
       pwd
     }).then(res => {
       if (res.status === 200 && res.data.code === 0) {
-        dispatch(loginSuccess({user, pwd}))
+        dispatch(authSuccess(res.data.data))
       } else {
         dispatch(errorMsg(res.data.msg))
       }
